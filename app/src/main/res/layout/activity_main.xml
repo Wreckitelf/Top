@@ -19,13 +19,13 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Display2" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/toSignIn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Sign In" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/toCreateAcc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Create Account" />

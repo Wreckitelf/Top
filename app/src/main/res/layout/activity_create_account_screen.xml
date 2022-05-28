@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".SignInScreen">
+    tools:context=".CreateAccountScreen">
 
     <TextView
         android:layout_width="wrap_content"
@@ -23,7 +23,7 @@
         android:layout_height="wrap_content">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/InputUserSignIn"
+            android:id="@+id/InputUserCreateAcc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Username"
@@ -38,7 +38,7 @@
         android:layout_height="wrap_content">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/InputPassSignIn"
+            android:id="@+id/InputPassCreateAcc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Password"
@@ -49,13 +49,13 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
-        android:id="@+id/completeSignIn"
+        android:id="@+id/CompleteCreateAcc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Sign in" />
+        android:text="Create Account" />
 
     <Button
-        android:id="@+id/SignInBackBtn"
+        android:id="@+id/CreateAccBackBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Back" />
