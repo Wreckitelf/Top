@@ -14,6 +14,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         configureToSignIn();
+        configureToCreateAcc();
     }
 
     private void configureToSignIn()
@@ -23,6 +24,17 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, SignInScreen.class));
+            }
+        });
+
+    }
+    private void configureToCreateAcc()
+    {
+        Button toCreateAcc = (Button) findViewById(R.id.toCreateAcc);
+        toCreateAcc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, CreateAccountScreen.class));
             }
         });
 

@@ -8,6 +8,7 @@
     tools:context=".CreateAccountScreen">
 
     <TextView
+        android:id="@+id/CreateAccountTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
@@ -15,7 +16,7 @@
         android:paddingTop="10sp"
         android:paddingEnd="10sp"
         android:paddingBottom="10sp"
-        android:text="Enter Credentials"
+        android:text="Create Account"
         android:textAppearance="@style/TextAppearance.AppCompat.Display2" />
 
     <com.google.android.material.textfield.TextInputLayout

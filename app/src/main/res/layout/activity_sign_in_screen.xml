@@ -15,7 +15,7 @@
         android:paddingTop="10sp"
         android:paddingEnd="10sp"
         android:paddingBottom="10sp"
-        android:text="Enter Credentials"
+        android:text="Sign In"
         android:textAppearance="@style/TextAppearance.AppCompat.Display2" />
 
     <com.google.android.material.textfield.TextInputLayout
