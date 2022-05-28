@@ -1,21 +1,30 @@
 package com.example.top;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class CreateAccountScreen extends AppCompatActivity implements View.OnClickListener{
 
     private FirebaseAuth mAuth;
     private TextView banner, registerAccount;
-    private EditText editTextUser, editTextPass;
+    private EditText editTextEmail, editTextPass;
+    private ProgressBar pb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,8 +39,10 @@ public class CreateAccountScreen extends AppCompatActivity implements View.OnCli
         registerAccount = (Button) findViewById(R.id.CompleteCreateAcc);
         registerAccount.setOnClickListener(this);
 
-        editTextUser = (EditText) findViewById(R.id.InputUserCreateAcc);
+        editTextEmail = (EditText) findViewById(R.id.InputUserCreateAcc);
         editTextPass = (EditText) findViewById(R.id.InputPassCreateAcc);
+
+        pb = (ProgressBar) findViewById(R.id.ProgressBarCreateAcc);
 
     }
 
@@ -48,13 +59,21 @@ public class CreateAccountScreen extends AppCompatActivity implements View.OnCli
     }
             @Override
             public void onClick(View v) {
-                String user = editTextUser.getText().toString().trim();
+                String email = editTextEmail.getText().toString().trim();
                 String pass = editTextPass.getText().toString().trim();
 
-                if(user.isEmpty())
+                if(email.isEmpty())
                 {
-                    editTextUser.setError("Enter A Username!");
-                    editTextUser.requestFocus();
+                    editTextEmail.setError("Enter A email!");
+                    editTextEmail.requestFocus();
+                    return;
+                }
+
+                if(!Patterns.EMAIL_ADDRESS.matcher(email).matches())
+                {
+                    editTextEmail.setError("Please enter a valid email");
+                    editTextEmail.requestFocus();
+                    return;
                 }
 
                 if(pass.isEmpty())
@@ -68,6 +87,44 @@ public class CreateAccountScreen extends AppCompatActivity implements View.OnCli
                 {
                     editTextPass.setError("Password should be a minimum of 6 characters");
                     editTextPass.requestFocus();
+                    return;
                 }
+
+                mAuth.createUserWithEmailAndPassword(email, pass)
+                        .addOnCompleteListener(new OnCompleteListener<AuthResult>()
+                        {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task)
+                            {
+                                if(task.isSuccessful())
+                                {
+                                    User user = new User(email);
+                                    FirebaseDatabase.getInstance().getReference("Users")
+                                            .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                                            .setValue(email).addOnCompleteListener(new OnCompleteListener<Void>()
+                                            {
+                                                @Override
+                                                public void onComplete(@NonNull Task<Void> task)
+                                                {
+                                                    if(task.isSuccessful())
+                                                    {
+                                                        Toast.makeText(CreateAccountScreen.this, "Your account has been created", Toast.LENGTH_LONG).show();
+                                                        pb.setVisibility(View.GONE);
+                                                    }
+                                                    else
+                                                    {
+                                                        Toast.makeText(CreateAccountScreen.this, "Failed to Register!", Toast.LENGTH_LONG).show();
+                                                        pb.setVisibility(View.GONE);
+                                                    }
+                                                }
+                                            });
+                                }
+                                else
+                                {
+                                    Toast.makeText(CreateAccountScreen.this, "Failed to Register!", Toast.LENGTH_LONG).show();
+                                    pb.setVisibility(View.GONE);
+                                }
+                            }
+                        });
     }
 }
