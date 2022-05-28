@@ -2,15 +2,16 @@ package com.example.top;
 
 public class User
 {
-    public String username;
+    public String email, username;
 
     public User()
     {
 
     }
 
-    public User(String username)
+    public User(String email, String username)
     {
+        this.email = email;
         this.username = username;
     }
 }

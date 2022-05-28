@@ -23,7 +23,7 @@ public class CreateAccountScreen extends AppCompatActivity implements View.OnCli
 
     private FirebaseAuth mAuth;
     private TextView banner, registerAccount;
-    private EditText editTextEmail, editTextPass;
+    private EditText editTextEmail, editTextPass, editTextUser;
     private ProgressBar pb;
 
     @Override
@@ -39,8 +39,9 @@ public class CreateAccountScreen extends AppCompatActivity implements View.OnCli
         registerAccount = (Button) findViewById(R.id.CompleteCreateAcc);
         registerAccount.setOnClickListener(this);
 
-        editTextEmail = (EditText) findViewById(R.id.InputUserCreateAcc);
+        editTextEmail = (EditText) findViewById(R.id.InputEmailCreateAcc);
         editTextPass = (EditText) findViewById(R.id.InputPassCreateAcc);
+        editTextUser = (EditText) findViewById(R.id.InputUserCreateAcc);
 
         pb = (ProgressBar) findViewById(R.id.ProgressBarCreateAcc);
 
@@ -60,12 +61,20 @@ public class CreateAccountScreen extends AppCompatActivity implements View.OnCli
             @Override
             public void onClick(View v) {
                 String email = editTextEmail.getText().toString().trim();
+                String username = editTextUser.getText().toString().trim();
                 String pass = editTextPass.getText().toString().trim();
 
                 if(email.isEmpty())
                 {
                     editTextEmail.setError("Enter A email!");
                     editTextEmail.requestFocus();
+                    return;
+                }
+
+                if(username.isEmpty())
+                {
+                    editTextUser.setError("Enter a Username!");
+                    editTextUser.requestFocus();
                     return;
                 }
 
@@ -98,7 +107,7 @@ public class CreateAccountScreen extends AppCompatActivity implements View.OnCli
                             {
                                 if(task.isSuccessful())
                                 {
-                                    User user = new User(email);
+                                    User user = new User(email, username);
                                     FirebaseDatabase.getInstance().getReference("Users")
                                             .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                                             .setValue(email).addOnCompleteListener(new OnCompleteListener<Void>()
@@ -123,6 +132,7 @@ public class CreateAccountScreen extends AppCompatActivity implements View.OnCli
                                 {
                                     Toast.makeText(CreateAccountScreen.this, "Failed to Register!", Toast.LENGTH_LONG).show();
                                     pb.setVisibility(View.GONE);
+
                                 }
                             }
                         });
