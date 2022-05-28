@@ -24,7 +24,9 @@ public class CreateAccountScreen extends AppCompatActivity implements View.OnCli
     private FirebaseAuth mAuth;
     private TextView banner, registerAccount;
     private EditText editTextEmail, editTextPass, editTextUser;
+
     private ProgressBar pb;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +45,7 @@ public class CreateAccountScreen extends AppCompatActivity implements View.OnCli
         editTextPass = (EditText) findViewById(R.id.InputPassCreateAcc);
         editTextUser = (EditText) findViewById(R.id.InputUserCreateAcc);
 
-        pb = (ProgressBar) findViewById(R.id.ProgressBarCreateAcc);
+        pb = (ProgressBar) findViewById(R.id.createAccPB);
 
     }
 
@@ -99,6 +101,7 @@ public class CreateAccountScreen extends AppCompatActivity implements View.OnCli
                     return;
                 }
 
+                pb.setVisibility(View.VISIBLE);
                 mAuth.createUserWithEmailAndPassword(email, pass)
                         .addOnCompleteListener(new OnCompleteListener<AuthResult>()
                         {

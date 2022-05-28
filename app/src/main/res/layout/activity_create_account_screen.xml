@@ -78,10 +78,10 @@
         android:text="Back" />
 
     <ProgressBar
-        android:id="@+id/ProgressBarCreateAcc"
+        android:id="@+id/createAccPB"
+        android:visibility="gone"
         style="?android:attr/progressBarStyle"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="gone"/>
+        android:layout_height="wrap_content" />
 
 </LinearLayout>
