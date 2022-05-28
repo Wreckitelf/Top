@@ -45,7 +45,8 @@
             android:paddingStart="10sp"
             android:paddingTop="10sp"
             android:paddingEnd="10sp"
-            android:paddingBottom="10sp" />
+            android:paddingBottom="10sp"
+            android:password="true" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button

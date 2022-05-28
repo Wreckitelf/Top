@@ -17,10 +17,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class SignInScreen extends AppCompatActivity implements View.OnClickListener{
+public class SignInScreen extends AppCompatActivity implements View.OnClickListener {
 
     private EditText editTextEmail, editTextPass;
-    private Button signIn;
 
     private FirebaseAuth mAuth;
     private ProgressBar pb;
@@ -30,9 +29,8 @@ public class SignInScreen extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in_screen);
         configureBackToHome();
+        configureCompleteSignIn();
 
-        signIn = (Button) findViewById(R.id.completeSignIn);
-        signIn.setOnClickListener(this);
 
         editTextEmail = (EditText) findViewById(R.id.InputEmailSignIn);
         editTextPass = (EditText) findViewById(R.id.InputPassSignIn);
@@ -51,9 +49,16 @@ public class SignInScreen extends AppCompatActivity implements View.OnClickListe
         });
 
     }
+    private void configureCompleteSignIn()
+    {
+        
+
+
+    }
 
     @Override
-    public void onClick(View v) {
+    public void onClick(View v)
+    {
         String email = editTextEmail.getText().toString().trim();
         String pass = editTextPass.getText().toString().trim();
 
@@ -90,13 +95,14 @@ public class SignInScreen extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful())
-                {
                     startActivity(new Intent(SignInScreen.this, MessagesScreen.class));
-                } else
+                else
                 {
-                    Toast.makeText(SignInScreen.this, "Failed to login", Toast.LENGTH_LONG).show();
+                    Toast.makeText(SignInScreen.this, "Failed to login, wrong credentials", Toast.LENGTH_LONG).show();
                 }
             }
         });
     }
+});
+
 }

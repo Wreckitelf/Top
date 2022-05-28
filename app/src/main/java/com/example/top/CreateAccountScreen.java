@@ -100,44 +100,61 @@ public class CreateAccountScreen extends AppCompatActivity implements View.OnCli
                     editTextPass.requestFocus();
                     return;
                 }
+                boolean hasUpper = false;
+                boolean hasNum = false;
+                for(int i = 0; i < pass.length(); i++)
+                {
+                    if (Character.isUpperCase(pass.charAt(i)))
+                        hasUpper = true;
+                    if (Character.isDigit(pass.charAt(i)))
+                        hasNum = true;
+                }
+                if(!hasNum)
+                {
+                    editTextPass.setError("Password should include at least one number");
+                    editTextPass.requestFocus();
+                    return;
+                }
+                if(!hasUpper)
+                {
+                    editTextPass.setError("Password should include at least one upper case");
+                    editTextPass.requestFocus();
+                    return;
+                }
 
                 pb.setVisibility(View.VISIBLE);
-                mAuth.createUserWithEmailAndPassword(email, pass)
-                        .addOnCompleteListener(new OnCompleteListener<AuthResult>()
-                        {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task)
-                            {
-                                if(task.isSuccessful())
-                                {
-                                    User user = new User(email, username);
-                                    FirebaseDatabase.getInstance().getReference("Users")
-                                            .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                                            .setValue(email).addOnCompleteListener(new OnCompleteListener<Void>()
-                                            {
-                                                @Override
-                                                public void onComplete(@NonNull Task<Void> task)
-                                                {
-                                                    if(task.isSuccessful())
-                                                    {
-                                                        Toast.makeText(CreateAccountScreen.this, "Your account has been created", Toast.LENGTH_LONG).show();
-                                                        pb.setVisibility(View.GONE);
-                                                    }
-                                                    else
-                                                    {
-                                                        Toast.makeText(CreateAccountScreen.this, "Failed to Register!", Toast.LENGTH_LONG).show();
-                                                        pb.setVisibility(View.GONE);
-                                                    }
-                                                }
-                                            });
-                                }
-                                else
-                                {
-                                    Toast.makeText(CreateAccountScreen.this, "Failed to Register!", Toast.LENGTH_LONG).show();
-                                    pb.setVisibility(View.GONE);
+               mAuth.createUserWithEmailAndPassword(email, pass)
+                       .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                           @Override
+                           public void onComplete(@NonNull Task<AuthResult> task) {
+                               if(task.isSuccessful())
+                               {
+                                   User user = new User(email, username);
 
-                                }
-                            }
-                        });
+                                   FirebaseDatabase.getInstance().getReference("Users")
+                                           .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                                           .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                               @Override
+                                               public void onComplete(@NonNull Task<Void> task) {
+                                                   if(task.isSuccessful())
+                                                   {
+                                                       Toast.makeText(CreateAccountScreen.this, "Account has been created", Toast.LENGTH_LONG).show();
+                                                       pb.setVisibility(View.GONE);
+                                                   }
+                                                   else
+                                                   {
+                                                       Toast.makeText(CreateAccountScreen.this, "Failed to register", Toast.LENGTH_LONG).show();
+                                                       pb.setVisibility(View.GONE);
+                                                   }
+                                               }
+                                           });
+                               }
+                               else
+                               {
+                                   Toast.makeText(CreateAccountScreen.this, "Failed to register", Toast.LENGTH_LONG).show();
+                                   pb.setVisibility(View.GONE);
+                               }
+                           }
+                       });
     }
 }
