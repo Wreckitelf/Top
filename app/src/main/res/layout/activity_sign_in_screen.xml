@@ -23,10 +23,10 @@
         android:layout_height="wrap_content">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/InputUserSignIn"
+            android:id="@+id/InputEmailSignIn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Username"
+            android:hint="Email"
             android:paddingStart="10sp"
             android:paddingTop="10sp"
             android:paddingEnd="10sp"
