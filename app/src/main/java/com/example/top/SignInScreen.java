@@ -36,6 +36,8 @@ public class SignInScreen extends AppCompatActivity implements View.OnClickListe
 
         editTextEmail = (EditText) findViewById(R.id.InputEmailSignIn);
         editTextPass = (EditText) findViewById(R.id.InputPassSignIn);
+
+        mAuth = FirebaseAuth.getInstance();
     }
 
     private void configureBackToHome()
@@ -89,7 +91,7 @@ public class SignInScreen extends AppCompatActivity implements View.OnClickListe
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful())
                 {
-
+                    startActivity(new Intent(SignInScreen.this, MessagesScreen.class));
                 } else
                 {
                     Toast.makeText(SignInScreen.this, "Failed to login", Toast.LENGTH_LONG).show();
