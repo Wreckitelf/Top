@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "478267369265",
+    "firebase_url": "https://topandroidapp-f5d49-default-rtdb.firebaseio.com",
+    "project_id": "topandroidapp-f5d49",
+    "storage_bucket": "topandroidapp-f5d49.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:478267369265:android:afa6bd5ccf4de17464b210",
+        "android_client_info": {
+          "package_name": "com.example.top"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "478267369265-urfb34klprfhdlrj1j8c1480h4d15nft.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB5GKwBgws1h3bzaXImUAOEFGBlgj1cpEc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "478267369265-urfb34klprfhdlrj1j8c1480h4d15nft.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -17,10 +17,10 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class SignInScreen extends AppCompatActivity implements View.OnClickListener {
+public class SignInScreen extends AppCompatActivity{
 
     private EditText editTextEmail, editTextPass;
-
+    private Button signIn;
     private FirebaseAuth mAuth;
     private ProgressBar pb;
 
@@ -51,58 +51,59 @@ public class SignInScreen extends AppCompatActivity implements View.OnClickListe
     }
     private void configureCompleteSignIn()
     {
-        
 
-
-    }
-
-    @Override
-    public void onClick(View v)
-    {
-        String email = editTextEmail.getText().toString().trim();
-        String pass = editTextPass.getText().toString().trim();
-
-        if(email.isEmpty())
-        {
-            editTextEmail.setError("Enter A email!");
-            editTextEmail.requestFocus();
-            return;
-        }
-
-        if(!Patterns.EMAIL_ADDRESS.matcher(email).matches())
-        {
-            editTextEmail.setError("Please enter a valid email");
-            editTextEmail.requestFocus();
-            return;
-        }
-
-        if(pass.isEmpty())
-        {
-            editTextPass.setError("Enter A Password!");
-            editTextPass.requestFocus();
-            return;
-        }
-
-        if(pass.length() < 6)
-        {
-            editTextPass.setError("Password should be a minimum of 6 characters");
-            editTextPass.requestFocus();
-            return;
-        }
-
-        pb.setVisibility(View.VISIBLE);
-        mAuth.signInWithEmailAndPassword(email, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+        signIn = (Button) findViewById(R.id.completeSignIn);
+        signIn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if(task.isSuccessful())
-                    startActivity(new Intent(SignInScreen.this, MessagesScreen.class));
-                else
-                {
-                    Toast.makeText(SignInScreen.this, "Failed to login, wrong credentials", Toast.LENGTH_LONG).show();
+            public void onClick(View v) {
+                String email = editTextEmail.getText().toString().trim();
+                String pass = editTextPass.getText().toString().trim();
+
+                if (email.isEmpty()) {
+                    editTextEmail.setError("Enter A email!");
+                    editTextEmail.requestFocus();
+                    return;
                 }
+
+                if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                    editTextEmail.setError("Please enter a valid email");
+                    editTextEmail.requestFocus();
+                    return;
+                }
+
+                if (pass.isEmpty()) {
+                    editTextPass.setError("Enter A Password!");
+                    editTextPass.requestFocus();
+                    return;
+                }
+
+                if (pass.length() < 6) {
+                    editTextPass.setError("Password should be a minimum of 6 characters");
+                    editTextPass.requestFocus();
+                    return;
+                }
+
+                mAuth.signInWithEmailAndPassword(email, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if(task.isSuccessful())
+                        {
+                            startActivity(new Intent(SignInScreen.this, MessagesScreen.class));
+                            pb.setVisibility(View.GONE);
+                        }
+                        else
+                        {
+                            Toast.makeText(SignInScreen.this, "Failed to sign in", Toast.LENGTH_LONG).show();
+                            pb.setVisibility(View.GONE);
+                        }
+                    }
+                });
+
             }
         });
+
     }
-});
+
+
 
 }
