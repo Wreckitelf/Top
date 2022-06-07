@@ -77,7 +77,7 @@ public class SignInScreen extends AppCompatActivity{
                     return;
                 }
 
-                if (pass.length() < 6) {
+               else if (pass.length() < 6) {
                     editTextPass.setError("Password should be a minimum of 6 characters");
                     editTextPass.requestFocus();
                     return;

@@ -31,13 +31,13 @@
         android:text="Create Account" />
 
     <ImageView
-        android:id="@+id/4starratinglol"
+        android:id="@+id/starRating"
         android:layout_width="match_parent"
         android:layout_height="137dp"
         app:srcCompat="@drawable/_873869ef3a71010b5e8ef41" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/personRating"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center_horizontal"
