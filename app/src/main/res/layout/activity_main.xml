@@ -30,5 +30,18 @@
         android:layout_height="wrap_content"
         android:text="Create Account" />
 
+    <ImageView
+        android:id="@+id/4starratinglol"
+        android:layout_width="match_parent"
+        android:layout_height="137dp"
+        app:srcCompat="@drawable/_873869ef3a71010b5e8ef41" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:text="- Josh" />
+
 
 </LinearLayout>
