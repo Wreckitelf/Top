@@ -25,7 +25,7 @@ import com.google.firebase.messaging.FirebaseMessagingService;
 
 public class MessagesScreen extends AppCompatActivity {
     EditText etToken;
-    Button send;
+    Button send, delete;
     TextView chat;
     EditText enterMessage;
     String chatText = "";
@@ -38,6 +38,7 @@ public class MessagesScreen extends AppCompatActivity {
         enterMessage = (EditText) findViewById(R.id.message);
         send = (Button) findViewById(R.id.send);
         chat = (TextView) findViewById(R.id.chat);
+        delete = (Button) findViewById(R.id.delete);
 
        /* etToken = findViewById(R.id.editTextToken);
         FirebaseMessaging.getInstance().getToken()
@@ -69,23 +70,24 @@ public class MessagesScreen extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for(DataSnapshot child : snapshot.getChildren())
                 {
-                    FirebaseDatabase.getInstance().getReference("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            User user = snapshot.getValue(User.class);
-                            chatText += user.username + ": " + child.getValue().toString() + "\n";
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-
-                        }
-                    });
-
+                    chatText += child.getValue().toString() + "\n";
                     System.out.println(child.getValue().toString());
                 }
-                chat.setText(chatText);
-                chatText = "";
+                FirebaseDatabase.getInstance().getReference("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        User user = snapshot.getValue(User.class);
+                        chat.setText(user.username + ": " + chatText);
+                        chatText = "";
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
+
             }
 
             @Override
@@ -101,6 +103,15 @@ public class MessagesScreen extends AppCompatActivity {
                 mref.push().setValue(enterMessage.getText().toString());
             }
         });
+
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                chat.setText("");
+            }
+        });
+
+
     }
 
 
