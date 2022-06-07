@@ -63,7 +63,7 @@ public class MessagesScreen extends AppCompatActivity {
         */
 
         FirebaseDatabase db = FirebaseDatabase.getInstance();
-        DatabaseReference mref = db.getReference("Chat").child("Josh");
+        DatabaseReference mref = db.getReference("Chat").child("Josh") ;
 
         mref.addValueEventListener(new ValueEventListener() {
             @Override
@@ -101,6 +101,7 @@ public class MessagesScreen extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 mref.push().setValue(enterMessage.getText().toString());
+                enterMessage.setText("");
             }
         });
 
