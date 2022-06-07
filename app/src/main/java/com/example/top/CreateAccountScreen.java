@@ -60,101 +60,101 @@ public class CreateAccountScreen extends AppCompatActivity implements View.OnCli
         });
 
     }
-            @Override
-            public void onClick(View v) {
-                String email = editTextEmail.getText().toString().trim();
-                String username = editTextUser.getText().toString().trim();
-                String pass = editTextPass.getText().toString().trim();
+    @Override
+    public void onClick(View v) {
+        String email = editTextEmail.getText().toString().trim();
+        String username = editTextUser.getText().toString().trim();
+        String pass = editTextPass.getText().toString().trim();
 
-                if(email.isEmpty())
-                {
-                    editTextEmail.setError("Enter A email!");
-                    editTextEmail.requestFocus();
-                    return;
-                }
+        if(email.isEmpty())
+        {
+            editTextEmail.setError("Enter A email!");
+            editTextEmail.requestFocus();
+            return;
+        }
 
-                if(username.isEmpty())
-                {
-                    editTextUser.setError("Enter a Username!");
-                    editTextUser.requestFocus();
-                    return;
-                }
+        if(username.isEmpty())
+        {
+            editTextUser.setError("Enter a Username!");
+            editTextUser.requestFocus();
+            return;
+        }
 
-                if(!Patterns.EMAIL_ADDRESS.matcher(email).matches())
-                {
-                    editTextEmail.setError("Please enter a valid email");
-                    editTextEmail.requestFocus();
-                    return;
-                }
+        if(!Patterns.EMAIL_ADDRESS.matcher(email).matches())
+        {
+            editTextEmail.setError("Please enter a valid email");
+            editTextEmail.requestFocus();
+            return;
+        }
 
-                if(pass.isEmpty())
-                {
-                    editTextPass.setError("Enter A Password!");
-                    editTextPass.requestFocus();
-                    return;
-                }
+        if(pass.isEmpty())
+        {
+            editTextPass.setError("Enter A Password!");
+            editTextPass.requestFocus();
+            return;
+        }
 
-                if(pass.length() < 6)
-                {
-                    editTextPass.setError("Password should be a minimum of 6 characters");
-                    editTextPass.requestFocus();
-                    return;
-                }
-                boolean hasUpper = false;
-                boolean hasNum = false;
-                for(int i = 0; i < pass.length(); i++)
-                {
-                    if (Character.isUpperCase(pass.charAt(i)))
-                        hasUpper = true;
-                    if (Character.isDigit(pass.charAt(i)))
-                        hasNum = true;
-                }
-                if(!hasNum)
-                {
-                    editTextPass.setError("Password should include at least one number");
-                    editTextPass.requestFocus();
-                    return;
-                }
-                if(!hasUpper)
-                {
-                    editTextPass.setError("Password should include at least one upper case");
-                    editTextPass.requestFocus();
-                    return;
-                }
+        if(pass.length() < 6)
+        {
+            editTextPass.setError("Password should be a minimum of 6 characters");
+            editTextPass.requestFocus();
+            return;
+        }
+        boolean hasUpper = false;
+        boolean hasNum = false;
+        for(int i = 0; i < pass.length(); i++)
+        {
+            if (Character.isUpperCase(pass.charAt(i)))
+                hasUpper = true;
+            if (Character.isDigit(pass.charAt(i)))
+                hasNum = true;
+        }
+        if(!hasNum)
+        {
+            editTextPass.setError("Password should include at least one number");
+            editTextPass.requestFocus();
+            return;
+        }
+        if(!hasUpper)
+        {
+            editTextPass.setError("Password should include at least one upper case");
+            editTextPass.requestFocus();
+            return;
+        }
 
-                pb.setVisibility(View.VISIBLE);
-               mAuth.createUserWithEmailAndPassword(email, pass)
-                       .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                           @Override
-                           public void onComplete(@NonNull Task<AuthResult> task) {
-                               if(task.isSuccessful())
-                               {
-                                   User user = new User(email, username);
+        pb.setVisibility(View.VISIBLE);
+        mAuth.createUserWithEmailAndPassword(email, pass)
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if(task.isSuccessful())
+                        {
+                            User user = new User(email, username);
 
-                                   FirebaseDatabase.getInstance().getReference("Users")
-                                           .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                                           .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                               @Override
-                                               public void onComplete(@NonNull Task<Void> task) {
-                                                   if(task.isSuccessful())
-                                                   {
-                                                       Toast.makeText(CreateAccountScreen.this, "Account has been created", Toast.LENGTH_LONG).show();
-                                                       pb.setVisibility(View.GONE);
-                                                   }
-                                                   else
-                                                   {
-                                                       Toast.makeText(CreateAccountScreen.this, "Failed to register", Toast.LENGTH_LONG).show();
-                                                       pb.setVisibility(View.GONE);
-                                                   }
-                                               }
-                                           });
-                               }
-                               else
-                               {
-                                   Toast.makeText(CreateAccountScreen.this, "Failed to register", Toast.LENGTH_LONG).show();
-                                   pb.setVisibility(View.GONE);
-                               }
-                           }
-                       });
+                            FirebaseDatabase.getInstance().getReference("Users")
+                                    .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                                    .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            if(task.isSuccessful())
+                                            {
+                                                Toast.makeText(CreateAccountScreen.this, "Account has been created", Toast.LENGTH_LONG).show();
+                                                pb.setVisibility(View.GONE);
+                                            }
+                                            else
+                                            {
+                                                Toast.makeText(CreateAccountScreen.this, "Failed to register", Toast.LENGTH_LONG).show();
+                                                pb.setVisibility(View.GONE);
+                                            }
+                                        }
+                                    });
+                        }
+                        else
+                        {
+                            Toast.makeText(CreateAccountScreen.this, "Failed to register", Toast.LENGTH_LONG).show();
+                            pb.setVisibility(View.GONE);
+                        }
+                    }
+                });
     }
 }

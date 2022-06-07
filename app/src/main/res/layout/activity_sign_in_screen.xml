@@ -25,7 +25,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/InputEmailSignIn"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="62dp"
             android:hint="Email"
             android:paddingStart="10sp"
             android:paddingTop="10sp"
@@ -40,7 +40,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/InputPassSignIn"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="62dp"
             android:hint="Password"
             android:paddingStart="10sp"
             android:paddingTop="10sp"
